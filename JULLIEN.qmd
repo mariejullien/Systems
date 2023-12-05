@@ -5,9 +5,41 @@ format: html
 editor: visual
 ---
 
+## Question 2
 Link to my github repository: https://github.com/mariejullien/Systems.git
 
+## Question 3
 ```{r}
+#| message: false
+library(here)
+library(vroom)
+library(dplyr)
+```
 
+```{r}
+here::i_am("JULLIEN.qmd")
+```
+
+
+```{r}
+imaginarystars <- vroom(here("Data","List+sytems.csv"),
+                        locale = locale(decimal_mark = "."))
+```
+The number of star system is `r nrow(imaginarystars)`.
+The number of row correspond to the number of star systems. 
+The number of star system is `r ncol(imaginarystars)`.
+We have 8 columns which is the number of variables. 
+
+```{r}
+str(imaginarystars)
+```
+
+We notice that the variables relative mass, radius and luminosity are of type characte, however they should be numerical so we modify the variables. 
+
+```{r}
+imaginarystars <- imaginarystars %>%
+ mutate(`RELATIVE MASS` = as.numeric(`RELATIVE MASS`),
+         radius = as.numeric(radius),
+         Luminosity = as.numeric(Luminosity))
 ```
 
