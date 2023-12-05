@@ -87,6 +87,43 @@ ggplot(na.omit(imaginarystars), aes(x =`RELATIVE MASS`, y = radius, is.na())) +
 
 We exclude the missing values from the graph to get rid of the warning message. 
 
+## Question 6
+
+
+```{r}
+star_max_mass <- imaginarystars[which.max(imaginarystars$`RELATIVE MASS`), ]
+
+star_min_mass <- imaginarystars[which.min(imaginarystars$`RELATIVE MASS`), ]
+
+star_max_distance <- imaginarystars[which.max(imaginarystars$DISTANCE), ]
+
+star_min_distance <- imaginarystars[which.min(imaginarystars$DISTANCE), ]
+
+star_max_temp <- imaginarystars[which.max(imaginarystars$`equivalent temperature`), ]
+
+star_min_temp <- imaginarystars[which.min(imaginarystars$`equivalent temperature`), ]
+
+star_max_radius <- imaginarystars[which.max(imaginarystars$radius), ]
+
+star_min_radius<- imaginarystars[which.min(imaginarystars$radius), ]
+
+star_max_luminosity <- imaginarystars[which.max(imaginarystars$Luminosity), ]
+
+star_min_luminosity <- imaginarystars[which.min(imaginarystars$Luminosity), ]
+
+```
+
+
+```{r}
+df_extreme_stars <- data.frame(
+  Extreme_star = c("Stars with max mass", "Star with min mass", "Stars with max distance", "Stars with min distance", "Star max temp","Star min temp","Stars max radius", "Stars min radius", "Star max luminosity", "Stars min luminosity"),
+  Star_name = c(star_max_mass$STAR_NAME, star_min_mass$STAR_NAME,star_max_distance$STAR_NAME, star_min_distance$STAR_NAME, star_max_temp$STAR_NAME, star_min_temp$STAR_NAME, star_max_radius$STAR_NAME, star_min_radius$STAR_NAME, star_max_luminosity$STAR_NAME, star_min_luminosity$STAR_NAME )
+)
+
+knitr::kable(df_extreme_stars)
+
+
+```
 
 
 
