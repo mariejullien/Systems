@@ -15,6 +15,7 @@ library(here)
 library(vroom)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 ```
 
 ```{r}
@@ -76,9 +77,15 @@ knitr::kable(datades_long)
 For the data to be more readable I pivot in long format. 
 
 
+## Question 5
+```{r}
+ggplot(na.omit(imaginarystars), aes(x =`RELATIVE MASS`, y = radius, is.na())) +
+  geom_point(size=0.1, alpha=0.8) +  
+  labs(x = "Star Mass", y = "Star Radius", title = "Star Radius as a function of Mass") +
+  theme_minimal()
+```
 
-
-
+We exclude the missing values from the graph to get rid of the warning message. 
 
 
 
