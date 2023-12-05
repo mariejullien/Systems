@@ -165,5 +165,36 @@ ggplot(q11, aes(x =`faction name`, y = sumstars, is.na())) +
 
 ## Question 12
 
+```{r}
+mergeall <- merge(merge_faction,imaginarystars, by="Star_idx")
+```
+
+
+```{r}
+q12 <- mergeall |>
+  filter(!(faction_id %in% c("A", "U", "I"))) |>
+  group_by(faction_id) 
+ggplot(q12,aes(x=Star_idx, y=DISTANCE, color=faction_id)) + 
+  geom_point() +  
+  labs(x = "faction_id", y = "Nb of stars", title = "Nb star system for each faction") 
+```
+## Question 13
+```{r}
+real_factions <- mergeall %>%
+  filter(!(faction_id %in% c("A", "U", "I")))
+
+most_luminous_stars <- real_factions %>%
+  group_by(faction_id) %>%
+  slice_max(order_by = Luminosity) %>%
+  ungroup()
+
+most_luminous_table <- most_luminous_stars %>%
+  select(faction_id, STAR_NAME, Luminosity) %>%
+  rename(Faction = faction_id, Star = STAR_NAME, Luminosity = Luminosity)
+
+knitr::kable(most_luminous_table)
+
+```
+
 
 
