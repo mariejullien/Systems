@@ -14,6 +14,7 @@ Link to my github repository: https://github.com/mariejullien/Systems.git
 library(here)
 library(vroom)
 library(dplyr)
+library(tidyr)
 ```
 
 ```{r}
@@ -23,7 +24,7 @@ here::i_am("JULLIEN.qmd")
 
 ```{r}
 imaginarystars <- vroom(here("Data","List+sytems.csv"),
-                        locale = locale(decimal_mark = "."))
+                        locale = locale(decimal_mark = ","))
 ```
 The number of star system is `r nrow(imaginarystars)`.
 The number of row correspond to the number of star systems. 
@@ -38,8 +39,47 @@ We notice that the variables relative mass, radius and luminosity are of type ch
 
 ```{r}
 imaginarystars <- imaginarystars %>%
- mutate(`RELATIVE MASS` = as.numeric(`RELATIVE MASS`),
-         radius = as.numeric(radius),
-         Luminosity = as.numeric(Luminosity))
+  mutate(`RELATIVE MASS` = ifelse(is.na(`RELATIVE MASS`), NA, as.numeric(`RELATIVE MASS`)),
+         radius = ifelse(is.na(radius), NA, as.numeric(radius)),
+         Luminosity = ifelse(is.na(Luminosity), NA, as.numeric(Luminosity)))
+
 ```
+
+## Question 4
+```{r}
+nb_obs_with_missing <- imaginarystars %>%
+  summarise(Nb_obs_with_missing = sum(rowSums(is.na(.)) > 0))
+
+datades <- data.frame(
+  Nb_column = nrow(imaginarystars),
+  Nb_variables = ncol(imaginarystars),
+  Nb_missingvaluesStar_idx=sum(is.na(imaginarystars$Star_idx)),
+  Nb_missingvaluesStarName=sum(is.na(imaginarystars$STAR_NAME)),
+  Nb_missingvaluesdistance=sum(is.na(imaginarystars$DISTANCE)),
+  Nb_missingvaluesEqtemp=sum(is.na(imaginarystars$`equivalent temperature`)),
+  Nb_missingvaluesrelativemass=sum(is.na(imaginarystars$`RELATIVE MASS`)),
+  Nb_missingvaluesradiusx=sum(is.na(imaginarystars$radius)),
+  Nb_missingvaluesluminosity=sum(is.na(imaginarystars$Luminosity)),
+  Nb_missingvaluesstartype=sum(is.na(imaginarystars$`star type`)),
+  Nb_obs_with_missing = as.vector(t(nb_obs_with_missing))
+)
+
+
+knitr::kable(datades)
+
+```
+```{r}
+datades_long <- datades |>
+  pivot_longer(cols = everything(), names_to = "Variable", values_to = "Value")
+knitr::kable(datades_long)
+```
+For the data to be more readable I pivot in long format. 
+
+
+
+
+
+
+
+
 
