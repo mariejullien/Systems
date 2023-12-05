@@ -125,5 +125,15 @@ knitr::kable(df_extreme_stars)
 
 ```
 
+## Question 8
+```{r}
+faction <- vroom(here("Data","bt%factions.csv"))
+```
+```{r}
+controlfaction <- vroom(here("Data","System%control.csv"))
+```
+
+
+
 
 
