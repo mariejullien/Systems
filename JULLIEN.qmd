@@ -132,6 +132,23 @@ faction <- vroom(here("Data","bt%factions.csv"))
 ```{r}
 controlfaction <- vroom(here("Data","System%control.csv"))
 ```
+## Question 9
+I merge the two data set to do the calculations 
+```{r}
+merge_faction <- merge(faction, controlfaction, by="faction_id")
+
+```
+
+## Question 10
+```{r}
+missing_systems <- anti_join(imaginarystars, controlfaction, by = "Star_idx")
+
+num_missing_systems <- nrow(missing_systems)
+
+print(num_missing_systems)
+
+```
+The number of star systems not in the control faction is `r num_missing_systems`.
 
 
 
