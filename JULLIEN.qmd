@@ -151,6 +151,19 @@ print(num_missing_systems)
 The number of star systems not in the control faction is `r num_missing_systems`.
 
 
+## Question 11
+```{r}
+q11 <- merge_faction |>
+  distinct(`faction name`,Star_idx) |>
+  group_by(`faction name`) |>
+  summarise(sumstars=n())
+ggplot(q11, aes(x =`faction name`, y = sumstars, is.na())) +
+  geom_col(position = position_dodge(width = 0.7), fill = "lightgreen") +  
+  labs(x = "faction_id", y = "Nb of stars", title = "Nb star system for each faction") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Question 12
 
 
 
